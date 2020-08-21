@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-    <form @submit.prevent="createStudent">
+    <form @submit.prevent="submitForm">
       <div class="form-group row">
         <input type="text" class="form-control col-3 mx-2" placeholder="Fname" v-model="student.fname">
         <input type="text" class="form-control col-3 mx-2" placeholder="Lname" v-model="student.lname">
@@ -20,12 +20,14 @@
         
       </thead>
       <tbody>
-        <tr v-for="student in students" :key="student.id">
+        <tr v-for="student in students" :key="student.id" @dblclick="$data.student = student">
           <td align="left">{{ student.fname }}</td>
           <td align="left">{{ student.lname }}</td>
           <td align="left">{{ student.course }}</td>
           <td>{{ student.rating }}</td>
-          
+          <td>
+             <button class="btn btn-outline-danger btn-sm mx-1" @click="deleteStudent(student)">X</button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -39,31 +41,64 @@ export default {
   name : 'App',
   data(){
     return {
-      student:{
-        'fname':'',
-        'lname':'',
-        'course':'',
-        'rating':'',
-      },
+      student:{},
       students: []
     }
   },
 
   async created(){
-    var response= await fetch('http://127.0.0.1:8000/api/student/')
-    this.students = await response.json();
+    await this.getStudents();
   },
 
   methods:{
+    submitForm(){
+      if (this.student.id===undefined){
+        this.createStudent();
+      }else{
+        this.editStudent();
+      }
+    },
+
+
+    async getStudents(){
+      var response = await fetch('http://127.0.0.1:8000/api/student/')
+      this.students = await response.json();
+    },
     async createStudent(){
-      var response= await fetch('http://127.0.0.1:8000/api/student/',{
+      await this.getStudents();
+
+      await fetch('http://127.0.0.1:8000/api/student/',{
         method:'post',
         headers:{
           'Content-Type':'application/json'
         },
         body: JSON.stringify(this.student)
       });
-      this.students.push(await response.json());
+      
+      await this.getStudents();
+    },
+    async editStudent(){
+      await fetch(`http://127.0.0.7:8000/api/student/${this.student.id}/`,{
+        method:'put',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body: JSON.stringify(this.student)
+      });
+      await this.getStudents();
+      this.student = {};
+    },
+    async deleteStudent(student){
+      await this.getStudents();
+      await fetch(`http://127.0.0.7:8000/api/student/${student.id}/`,{
+        method:'delete',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body: JSON.stringify(this.student)
+      });
+      await this.getStudents();
+
     }
   }
 
