@@ -36,7 +36,6 @@
 
 <script>
 
-
 export default {
   name : 'App',
   data(){
@@ -52,18 +51,18 @@ export default {
 
   methods:{
     submitForm(){
-      if (this.student.id===undefined){
+      if (this.student.id === undefined){
         this.createStudent();
       }else{
         this.editStudent();
       }
     },
 
-
     async getStudents(){
       var response = await fetch('http://127.0.0.1:8000/api/student/')
       this.students = await response.json();
     },
+
     async createStudent(){
       await this.getStudents();
 
@@ -77,8 +76,11 @@ export default {
       
       await this.getStudents();
     },
+
     async editStudent(){
-      await fetch(`http://127.0.0.7:8000/api/student/${this.student.id}/`,{
+      await this.getStudents();
+
+      await fetch(`http://localhost:8000/api/student/${this.student.id}/`,{
         method:'put',
         headers:{
           'Content-Type':'application/json'
@@ -88,20 +90,20 @@ export default {
       await this.getStudents();
       this.student = {};
     },
+
     async deleteStudent(student){
       await this.getStudents();
-      await fetch(`http://127.0.0.7:8000/api/student/${student.id}/`,{
-        method:'delete',
+
+      await fetch(`http://localhost:8000/api/student/${student.id}/`,{
+        method: 'delete',
         headers:{
           'Content-Type':'application/json'
         },
         body: JSON.stringify(this.student)
       });
       await this.getStudents();
-
     }
   }
-
 }
 </script>
 
