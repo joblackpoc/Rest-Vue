@@ -3,18 +3,18 @@
 ```
 - git clone https://github.com/joblackpoc/rest-vue.git
 ```
-## เปิด VScode
+### เปิด VScode
 ```
 - cd rest-vue
 ```
-## เปิด new terminal
+### เปิด new terminal
 ```
 - cd rest-vue
 - pip install -r requirements.txt
 - cd backend
 - python manage.py runserve
 ```
-## เปิด new terminal
+### เปิด new terminal
 ```
 - cd rest-vue
 - npm install
