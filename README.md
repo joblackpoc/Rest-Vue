@@ -1,4 +1,3 @@
-# Rest-Vue
 Django Rest-Framework + Vue.JS
 ## เปิด git bash
 - git clone https://github.com/joblackpoc/rest-vue.git
