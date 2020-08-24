@@ -1,9 +1,9 @@
-Django Rest-Framework + Vue.JS
-## เปิด git bash
+# Django Rest-Framework + Vue.JS
+### เปิด git bash
 ```
 - git clone https://github.com/joblackpoc/rest-vue.git
 ```
-# เปิด VScode
+## เปิด VScode
 ```
 - cd rest-vue
 ```
