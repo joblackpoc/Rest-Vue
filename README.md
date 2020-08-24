@@ -15,4 +15,3 @@ Django Rest-Framework + Vue.JS
 - npm run serve
 - เปิด browser localhost:8000/api/student
 - เปิด browser localhost:8080
-## เสร็จ
